@@ -1,14 +1,27 @@
 version: 0.2
+
 phases:
-install:
-runtime-versions:
-nodejs: latest
-commands:
-# If needed, you can add commands for dependency installation
-build:
-commands:
-- echo "Build completed on `date`"
+  install:
+    commands:
+      - echo Installing dependencies...
+
+  pre_build:
+    commands:
+      - echo Running pre-build steps...
+      - python3 -m venv .venv
+      - source .venv/bin/activate
+      - pip install --upgrade pip
+
+  build:
+    commands:
+      - echo Running build steps...
+      - echo Packaging application...
+
+  post_build:
+    commands:
+      - echo Build completed successfully.
+
 artifacts:
-files:
-- '**/*'
-base-directory: .
+  files:
+    - app-package.zip
+    - "**/*"
